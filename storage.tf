@@ -3,11 +3,10 @@ resource "aws_s3_bucket" "video_bucket" {
   bucket_prefix = "team1-video-project-"
 }
 
-# ECR 리포지토리 4개
-resource "aws_ecr_repository" "repos" {
-  for_each = toset(["my-web", "my-was", "my-ai-worker", "my-redis"])
-  name     = each.key
-  force_delete = true # 프로젝트 삭제 시 이미지도 같이 삭제
+# ECR 리포지토리 (GitHub Actions와 이름 일치)
+resource "aws_ecr_repository" "docker_repo" {
+  name         = "team1-images"
+  force_delete = true
 }
 
 # RDS (PostgreSQL) - AZ 1개에 고정
